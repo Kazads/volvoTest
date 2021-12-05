@@ -1,20 +1,20 @@
-FROM node:17-bullseye
+FROM ianwalter/puppeteer:v4.0.0
 
-RUN apt update \
-    && apt upgrade \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt update \
-    && apt install google-chrome-stable -y \
-    && mkdir /home/node/volvoTest
+# Adding config files for the project 
+ADD wdio.conf.js package.json /home/node/volvoTest/
 
-ADD wdio.conf.js package.json /home/node/volvoTest
-
-RUN cd /home/node/volvoTest \
+# Removing messages about npm not being fully updated and
+# installing everything needed for the tests to run
+RUN npm config set update-notifier false \
+    && cd /home/node/volvoTest \
     && npm install
 
-VOLUME "/home/node/volvoTest/test" "/home/node/volvoTest/result"
+# Setting up a volume for the tests to minimize the times it is required 
+# to rebuild the container
+VOLUME "/home/node/volvoTest/test"
 
 WORKDIR "/home/node/volvoTest"
 
-ENTRYPOINT ["/bin/sh"]
+# Run the tests
+ENTRYPOINT ["npm", "run", "wdio"]
+

@@ -8,8 +8,28 @@ class AMillionMore {
         return $('video[autoplay]')
     }
 
-    get saftyFeatures(){
+    get safetyFeatures(){
         return $$('div[data-autoid="iconCallouts:iconTextItem"]')
+    }
+
+    get testimonials(){
+        return $$('div[data-autoid="videoTestimonials:container"]')
+    }
+
+    get imageWithText(){
+        return $('div[data-autoid="ImageWithText-1"]')
+    }
+
+    get carModels(){
+        return $$('div[data-autoid="springCarouselPane:carouselItem"]')
+    }
+
+    get rechargeLink(){
+        return $('a[href="/intl/v/cars/recharge"]')
+    }
+
+    get mildHybridCarsLink(){
+        return $('a[href="/intl/v/cars/other-powertrains"]')
     }
 
     open() {
