@@ -1,0 +1,1 @@
+docker run -it -v test:/home/node/volvoTest/test --name stuff test
